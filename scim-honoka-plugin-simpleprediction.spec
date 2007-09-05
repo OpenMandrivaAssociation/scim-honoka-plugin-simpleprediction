@@ -1,5 +1,5 @@
 %define version  0.9.0
-%define release  %mkrel 1
+%define release  %mkrel 2
 %define src_name honoka-plugin-simpleprediction
 
 %define honoka_version   0.9.0
@@ -23,10 +23,9 @@ A simple prediction plugin for honoka.
 
 %prep
 %setup -q -n %{src_name}-%{version}
-cp /usr/share/automake-1.9/mkinstalldirs .
 
 %build
-[[ -f configure ]] || ./bootstrap
+./bootstrap
 
 %configure2_5x
 # (tv) parallel build is broken:
@@ -37,7 +36,7 @@ rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
 
 # remove devel files
-rm -f $RPM_BUILD_ROOT/%{_libdir}/scim-1.0/honoka/*.{a,la}
+rm -f $RPM_BUILD_ROOT/%{scim_plugins_dir}/honoka/*.{a,la}
 
 %find_lang honoka-plugin-simpleprediction
 
@@ -52,6 +51,4 @@ rm -rf $RPM_BUILD_ROOT
 %files -f honoka-plugin-simpleprediction.lang
 %defattr(-,root,root)
 %doc AUTHORS COPYING ChangeLog README.jp
-%{_libdir}/scim-1.0/honoka/*.so
-
-
+%{scim_plugins_dir}/honoka/*.so
